@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int pages;
+  cout << "Enter no. of incoming streams: " << endl;
+  cin >> pages;
+  int incomingStream[pages];
+  cout << "Enter incoming Stream: " << endl;
+  for (int i = 0; i < pages; i++)
+  {
+    cin >> incomingStream[i];
+  }
+  int pageFaults = 0;
+  int frames = 3;
+  int m, n, s;
+  cout << "Incoming \t Frame 1 \t Frame 2 \t Frame 3" << endl;
+  vector<int> temp;
+  unordered_map<int, int> indexMap;
+  for (int i = 0; i < pages; i++)
+  {
+    s = 0;
+    auto it = find(temp.begin(), temp.end(), incomingStream[i]);
+    if (it != temp.end())
+    {
+      s++;
+      pageFaults--;
+      indexMap[incomingStream[i]] = i;
+    }
+    if (temp.size() < frames && s == 0)
+    {
+      temp.push_back(incomingStream[i]);
+      indexMap[incomingStream[i]] = i;
+    }
+    else if (s == 0)
+    {
+      int idx = -1, farthest = INT_MIN;
+      for (int j = 0; j < temp.size(); j++)
+      {
+        int nextIndex = INT_MAX;
+        for (int k = i + 1; k < pages; k++)
+        {
+          if (incomingStream[k] == temp[j])
+          {
+            nextIndex = k;
+            break;
+          }
+        }
+        if (nextIndex == INT_MAX)
+        {
+          idx = j;
+          break;
+        }
+        else if (nextIndex > farthest)
+        {
+          farthest = nextIndex;
+          idx = j;
+        }
+      }
+      temp[idx] = incomingStream[i];
+      indexMap[incomingStream[i]] = i;
+    }
+    pageFaults++;
+    cout << endl;
+    cout << incomingStream[i] << "\t\t";
+    for (int j = 0; j < frames; j++)
+    {
+      if (j < temp.size())
+        cout << temp[j] << "\t\t";
+      else
+        cout << "-\t\t";
+    }
+  }
+  cout << endl;
+  cout << "Total Page Faults: " << pageFaults << endl;
+  cout << "Total Page hit: " << (pages - pageFaults) << endl;
+  return 0;
+}-
