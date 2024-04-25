@@ -1,0 +1,85 @@
+<!-- register page-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="register.css">
+    
+</head>
+<body>
+    <div class="container">
+        <a href="index.html"><h1>Sign Up</h1> </a>
+        <p class="para0">It's quick and easy</p>
+         <form action="/myaction.php" name="myForm" onsubmit="return validateForm()" method="post">
+
+            <!-- Name -->
+            <div class="form-control" id="name">
+              <input type="text" placeholder="First name" name="fname"  required> <input type="text" placeholder="Surname" name="lname" id="Lname" required> <span></span>
+            </div>
+ 
+        
+            <!-- Email -->
+            <div class="form-control" id="email">
+                <input type="email" placeholder="Email" name="femail" required> <p class="formerror"></p>
+            </div>
+            
+         <!-- Password -->
+          <div class="form-control" id="password">
+            <input type="password" placeholder="Password" name="password" required> <p class="formerror"></p>
+          </div>
+         
+         <!-- Confirm Password -->
+          <div class="form-control" id="cpassword">
+            <input type="password" placeholder="Confirm Password" name="cpass" required> <p class="formerror"></p>
+           </div>
+
+           
+          <!-- Data of Birth -->
+          <div class="form-control" id="dob">
+         <label class="Date">Date of birth</label> <br>
+            <input id="date" type="date" required>
+          </div>
+         
+            <!-- Phone number -->
+          <div class="form-control" id="phone">
+            <input type="number" placeholder="Mobile number" name="mobile" required> <p class="formerror"></p>
+           </div>
+          
+          <!-- Gender -->
+          <div class="form-control" id="gender">
+            <label id="gen">Gender</label> <br>
+            <div class="radbut">
+              <input type="radio" name="myGender" id="male"> Male <input type="radio" name="myGender" id="female">
+              Female <input type="radio" name="myGender" id="other"> Other
+            </div>
+           
+          </div>
+
+
+          <div class="section">
+
+            <!-- para1 -->
+            <div class="para1">
+                <p>People who use our service may have uploaded your contact information to Facebook <a href="https://www.facebook.com/help/637205020878504">learn more</a></p>
+            </div>
+ 
+            <!-- para2 -->
+            <div class="para2">
+                <p>By clicking Sign Up, you agree to our <a href="https://www.facebook.com/legal/terms/update">Terms </a>, <a href="https://www.facebook.com/privacy/policy/?entry_point=data_policy_redirect&entry=0">Privacy Policy</a> and <a href="https://www.facebook.com/policies/cookies/">Cookies Policy</a>.</p>
+            </div>
+            
+            <!-- Para3 -->
+            <div class="para3">
+                <p> You may receive SMS notifications from us and can opt out at any time.</p>
+            </div>
+          </div>
+          <button class="btn">Sign Up</button>
+         </form>
+    </div>
+  <script src="register.js"></script>
+</body>
+
+</html>

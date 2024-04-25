@@ -1,0 +1,78 @@
+index.html :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Cookies Example</h1>
+    <button onclick="setCookie()">Set Cookie</button>
+    <button onclick="getCookie()">Get Cookie</button>
+    <button onclick="deleteCookie()">Delete Cookie</button>
+
+    <script>
+        // JavaScript function to set a cookie
+        function setCookie() {
+            document.cookie = "username=Shriniwas Dhage; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";
+            alert("Cookie set successfully!");
+        }
+
+        // JavaScript function to get a cookie
+        function getCookie() {
+            var cookieValue = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('username='))
+                .split('=')[1];
+            alert("Username: " + cookieValue);
+        }
+
+        // JavaScript function to delete a cookie
+        function deleteCookie() {
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            alert("Cookie deleted successfully!");
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+styles.css : 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  background-color: #004080;
+}

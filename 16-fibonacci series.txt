@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fibonacci Series</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f9f9f9;
+    }
+
+    .container {
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #result {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Fibonacci Series Generator</h2>
+    <button onclick="generateFibonacci()">Generate Fibonacci Series</button>
+    <div id="result"></div>
+</div>
+
+<script>
+function generateFibonacci() {
+    var n = parseInt(prompt("Enter the number of terms for Fibonacci series:"));
+
+    if (n === 0) {
+        document.getElementById("result").innerHTML = "Fibonacci Series: 0"; // Display 0 if n is 0
+        return;
+    }
+
+    var fibSeries = [0, 1]; // First two numbers of Fibonacci series
+    for (var i = 2; i < n; i++) {
+        fibSeries.push(fibSeries[i - 1] + fibSeries[i - 2]); // Add the previous two numbers to get the next Fibonacci number
+    }
+    document.getElementById("result").innerHTML = "Fibonacci Series: " + fibSeries.join(', ');
+}
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,189 @@
+
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f9f9f9;
+    }
+
+    .video-container {
+        width: 80%;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="video-container">
+    <input type="file" id="video-file" accept="video/mp4,video/x-m4v,video/*">
+    <button onclick="addVideo()">Add Video</button>
+    <div id="video-player"></div>
+</div>
+
+<script>
+function addVideo() {
+    var videoFile = document.getElementById("video-file").files[0];
+    var videoPlayer = document.getElementById("video-player");
+
+    if (!videoFile) {
+        alert("Please select a video file.");
+        return;
+    }
+
+    var videoUrl = URL.createObjectURL(videoFile);
+
+    var videoElement = document.createElement("video");
+    videoElement.setAttribute("controls", true);
+
+    var sourceElement = document.createElement("source");
+    sourceElement.setAttribute("src", videoUrl);
+    sourceElement.setAttribute("type", "video/mp4");
+
+    videoElement.appendChild(sourceElement);
+    videoPlayer.innerHTML = "";
+    videoPlayer.appendChild(videoElement);
+
+    videoElement.onerror = function() {
+        alert("Error loading video. Please try again.");
+    };
+}
+</script>
+
+</body>
+</html>
+<!-- <!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f9f9f9;
+    }
+
+    .video-container {
+        width: 80%;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="video-container">
+    <input type="text" id="video-url" placeholder="Enter video URL">
+    <button onclick="addVideo()">Add Video</button>
+    <div id="video-player"></div>
+</div>
+
+<script>
+function addVideo() {
+    var videoUrl = document.getElementById("video-url").value.trim();
+    var videoPlayer = document.getElementById("video-player");
+
+    if (videoUrl === "") {
+        alert("Please enter a valid video URL.");
+        return;
+    }
+
+    var videoElement = document.createElement("video");
+    videoElement.setAttribute("controls", true);
+
+    var sourceElement = document.createElement("source");
+    sourceElement.setAttribute("src", videoUrl);
+    sourceElement.setAttribute("type", "video/mp4");
+
+    videoElement.appendChild(sourceElement);
+    videoPlayer.innerHTML = "";
+    videoPlayer.appendChild(videoElement);
+
+    videoElement.onerror = function() {
+        alert("Error loading video. Please check the URL and try again.");
+    };
+}
+</script>
+
+</body>
+</html>
+
+// https://www.w3schools.com/html/mov_bbb.mp4 -->

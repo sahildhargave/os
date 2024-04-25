@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Increased width */
+}
+
+h2 {
+    text-align: center;
+}
+
+.input-container {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <form id="login-form">
+    <h2> Facebook Login</h2>
+    <div class="input-container">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <div class="error" id="username-error"></div>
+    </div>
+    <div class="input-container">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <div class="error" id="password-error"></div>
+    </div>
+    <div class="input-container">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <div class="error" id="email-error"></div>
+    </div>
+    <div class="input-container">
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <div class="error" id="gender-error"></div>
+    </div>
+    <div class="input-container">
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+      <div class="error" id="phone-error"></div>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<script>
+document.getElementById("login-form").addEventListener("submit", function(event) {
+  event.preventDefault(); // prevent the default form submission
+  
+  // Clear previous error messages
+  clearErrors();
+
+  // Get the form inputs
+  var username = document.getElementById("username").value.trim();
+  var password = document.getElementById("password").value.trim();
+  var email = document.getElementById("email").value.trim();
+  var gender = document.getElementById("gender").value.trim();
+  var phone = document.getElementById("phone").value.trim();
+
+  // Field-level validation
+  if (!isValidUsername(username)) {
+    displayError("username", "Username should be a non-empty string");
+    return false;
+  }
+
+  if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password)) {
+    displayError("password", "Password should be at least 8 characters with uppercase, lowercase, and digits");
+    return false;
+  }
+
+  if (!isValidEmail(email)) {
+    displayError("email", "Invalid email format");
+    return false;
+  }
+
+  if (gender === "") {
+    displayError("gender", "Please select a gender");
+    return false;
+  }
+
+  if (!/^\d{10}$/.test(phone)) {
+    displayError("phone", "Phone number should be 10 digits");
+    return false;
+  }
+  
+  // If all validations pass, alert the entered values and clear the form
+  alert("Login Successful!");
+  clearForm();
+  return true;
+});
+
+function displayError(field, message) {
+  document.getElementById(field + "-error").textContent = message;
+}
+
+function clearErrors() {
+  var errorElements = document.querySelectorAll(".error");
+  errorElements.forEach(function(element) {
+    element.textContent = "";
+  });
+}
+
+function isValidUsername(username) {
+  return typeof username === 'string' && username.trim() !== '';
+}
+
+function isValidEmail(email) {
+  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+}
+
+function clearForm() {
+  document.getElementById("login-form").reset();
+}
+</script>
+
+</body>
+</html>

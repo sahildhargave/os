@@ -1,0 +1,544 @@
+config.php :
+<?php
+// Database Configuration
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "Facebook";
+
+// Create connection
+$conn = new mysqli("localhost", "root", "", "Facebook");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+
+
+
+createpost.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: #f0f2f5;
+    border-right: 1px solid #ccc;
+}
+
+.welcome-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea, input[type="text"], input[type="file"], input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="welcome-message">Welcome, <?php echo $_SESSION['username']; ?></div>
+            <ul>
+                <li><a href="dashboard.php">Profile</a></li>
+                <li><a href="#">Create Post</a></li>
+                <li><a href="#">Feed</a></li>
+                <li><a href="#">Shorts</a></li>
+                <li><a href="#">Requests</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h2>Create Post</h2>
+            <form action="createpost_process.php" method="POST" enctype="multipart/form-data">
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+                <label for="location">Location:</label><br>
+                <input type="text" id="location" name="location" required><br><br>
+                <label for="image">Image:</label><br>
+                <input type="file" id="image" name="image"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+createpost_process.php :
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Include database connection
+include 'config.php';
+
+// Process form data
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form data
+    $description = $_POST['description'];
+    $location = $_POST['location'];
+
+    // Insert data into the database
+    $sql = "INSERT INTO posts (description, location, user_id) VALUES (?, ?, ?)";
+    if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("ssi", $description, $location, $_SESSION['user_id']);
+        if ($stmt->execute()) {
+            echo "Post created successfully!";
+        } else {
+            echo "Error: " ;
+        }
+        $stmt->close();
+    }
+    $mysqli->close();
+}
+?>
+
+
+
+
+dashboard.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f0f2f5;
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar .welcome-message {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #385898;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    color: #2e4a88;
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="welcome-message">Welcome, <?php echo $_SESSION['username']; ?></div>
+            <ul>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Create Post</a></li>
+                <li><a href="#">Feed</a></li>
+                <li><a href="#">Shorts</a></li>
+                <li><a href="#">Requests</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <!-- Main content goes here -->
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+login.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f0f2f5;
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar .welcome-message {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #385898;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    color: #2e4a88;
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="welcome-message">Welcome, <?php echo $_SESSION['username']; ?></div>
+            <ul>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Create Post</a></li>
+                <li><a href="#">Feed</a></li>
+                <li><a href="#">Shorts</a></li>
+                <li><a href="#">Requests</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <!-- Main content goes here -->
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+login_process.php :
+<?php
+session_start();
+
+// Include database connection file
+include "config.php";
+
+// Retrieve form data
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+// Perform user authentication
+$sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) == 1) {
+    // User authenticated, redirect to dashboard or home page
+    $_SESSION['email'] = $email;
+    header("Location: dashboard.php");
+    exit();
+} else {
+    // Invalid credentials, redirect back to login page with error message
+    header("Location: login.php?error=Invalid email or password");
+    exit();
+}
+
+// Close connection
+
+?>
+
+
+
+
+
+
+signup.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file for styling -->
+</head>
+<body>
+    <div class="container">
+        <h2>Signup</h2>
+        <form action="signup_process.php" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required><br><br>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select><br><br>
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+signup_process.php :
+<?php
+// Include database connection file
+include "config.php";
+
+// Retrieve form data
+$name = $_POST['name'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$confirm_password = $_POST['confirm_password'];
+$dob = $_POST['dob'];
+$gender = $_POST['gender'];
+
+// Perform password validation
+if ($password !== $confirm_password) {
+    header("Location: signup.php?error=Passwords do not match");
+    exit();
+}
+
+// Perform database insertion
+$sql = "INSERT INTO users (name, email, password, dob, gender) 
+        VALUES ('$name', '$email', '$password', '$dob', '$gender')";
+if (mysqli_query($conn, $sql)) {
+    header("Location: login.php?success=Signup successful. Please login.");
+    exit();
+} else {
+    header("Location: signup.php?error=Error: " . mysqli_error($conn));
+    exit();
+}
+
+// Close connection
+
+?>
+
+
+
+
+
+
+
+style.css :
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+.header {
+  background-color: #3b5998;
+  color: #fff;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 32px;
+  margin: 0;
+}
+
+/* Navigation Styles */
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #dddfe2;
+  padding: 10px 0;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.navbar a {
+  color: #385898;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Signup/Login Styles */
+.form-container {
+  background-color: #fff;
+  border: 1px solid #dddfe2;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"],
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #dddfe2;
+  border-radius: 5px;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #3b5998;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #2e4a88;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 5px;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #f0f2f5;
+  padding: 20px 0;
+  text-align: center;
+  color: #606770;
+}

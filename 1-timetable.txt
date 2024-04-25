@@ -1,0 +1,75 @@
+index.html : 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timetable</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+<h2>Weekly Timetable</h2>
+
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+  </tr>
+  <tr>
+    <td>8:00 - 9:00</td>
+    <td>Maths</td>
+    <td>English</td>
+    <td>Science</td>
+    <td>History</td>
+    <td>Geography</td>
+  </tr>
+  <tr>
+    <td>9:00 - 10:00</td>
+    <td>Physics</td>
+    <td>Chemistry</td>
+    <td>Art</td>
+    <td>Physical Education</td>
+    <td>Music</td>
+  </tr>
+  <tr>
+    <td>10:00 - 11:00</td>
+    <td>History</td>
+    <td>Geography</td>
+    <td>Maths</td>
+    <td>English</td>
+    <td>Science</td>
+  </tr>
+  <!-- Add more rows for additional hours if needed -->
+</table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+styles.css : 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

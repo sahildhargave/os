@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Gallery</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: aqua;
+    }
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+    .heading{
+        margin: 10px;
+        margin-left: 550px;
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+</head>
+<body >
+    <h1 class="heading">Image Gallary by Shriniwas</h1>
+<div class="gallery">
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+    <div class="gallery-item">
+        <img src="th.jpg" alt="Image 1">
+    </div>
+   
+    <!-- Add more gallery items as needed -->
+</div>
+</body>
+</html>
+

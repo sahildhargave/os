@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+body{
+    display: flex;
+    background-color: steelblue;
+    color: #fff;
+    justify-content: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    /* height: 100vh; */
+    margin-top: 12px;
+    overflow-x: hidden;
+}
+
+.container{
+     background-color: rgba(0, 0, 0, 0.4);
+     padding: 15px 36px 25px 31px;
+     margin: 5px 5px 5px 5px
+}
+
+.container h1{
+    margin-top: -2px;
+    text-align: center;
+}
+
+.para0{
+    margin-top: -14px;
+    /* display: block; */
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.container a {
+    text-decoration: none;
+    color: lightblue;
+  }
+
+  .container a:hover{
+    text-decoration: underline;
+    color: rgb(133, 183, 228);
+  }
+
+
+  .form-control{
+    position: relative;
+    margin: 20px 0 40px;   
+}
+
+.form-control p{
+  margin-top: 3px;
+  position: absolute;
+  font-size: small;
+  color: red;
+} 
+
+.form-control input {
+     padding: 15px 10px; 
+    background-color: transparent;
+    border-bottom: 2px #fff solid;
+    display: inline-block;
+    font-size: 16px;
+    color: #fff;
+}
+
+ 
+/*#name{  
+    display: inline-block;
+}*/
+
+#name input{
+    width: 200px;
+}
+
+.form-control#email input{
+ margin-top: -6px;
+ width: 430px;
+}
+ 
+.form-control label{
+  margin: 4px;
+}
+
+
+   .form-control#dob input{
+    margin-top: 6px;
+    width: 430px;
+    color: #fff;
+   }
+
+   .form-control#dob{
+    margin-top: -11px;
+   }
+
+   .Date{
+    margin-top: -2px;
+   }
+
+   .form-control#password{
+    margin-top: -3px;
+   }
+
+   .form-control#password input{
+    margin-top: -2px;
+    width: 430px;
+   }
+
+   .form-control#cpassword input{
+    margin-top: -2px;
+    width: 430px;
+   }
+
+   .form-control#phone input{
+    margin-top: -2px;
+    width: 430px;
+   }
+
+
+   
+   .form-control#gender input{
+    display: inline-block;
+    border: 2px solid rgb(17, 17, 17);
+   }
+   
+  .radbut{
+    display: flex;
+    background-color: transparent;
+  }
+
+.form-control ::placeholder{
+    font-size: 15px;
+    padding-left: 10px;
+    color: rgb(240, 228, 228);
+  }
+
+  .btn{
+    cursor: pointer;
+    width: 97%;
+    background: rgb(17, 241, 103);
+    padding: 15px;
+    
+    font-size: 16px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bolder;
+  }
+
+  .section{
+    font-size: 10px;
+    /* display: flexbox; */
+    margin-top: -14px;
+  }
+
+  .section p{
+    margin-top: -9px;
+    
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }

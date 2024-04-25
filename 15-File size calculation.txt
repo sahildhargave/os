@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Size Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        #file-size {
+            font-size: 18px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+    <script>
+        function calculateFileSize() {
+            var fileInput = document.getElementById('file-input');
+            var fileSize = fileInput.files[0].size; // Size in bytes
+            var sizeInKB = fileSize / 1024; // Size in kilobytes
+            var sizeInMB = sizeInKB / 1024; // Size in megabytes
+
+            // Display the file size dynamically
+            var fileSizeDisplay = document.getElementById('file-size');
+            fileSizeDisplay.style.display = 'block';
+            fileSizeDisplay.innerHTML = "File Size: " + sizeInMB.toFixed(2) + " MB";
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>File Size Calculator</h2>
+    <input type="file" id="file-input" onchange="calculateFileSize()">
+    <div id="file-size"></div>
+</div>
+
+</body>
+</html>

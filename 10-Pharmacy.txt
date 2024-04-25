@@ -1,0 +1,605 @@
+add_inventory.php :
+<?php
+// Include database connection
+$conn = new mysqli("localhost", "root", "", "pharmacy");
+
+if ($conn->connect_error) {
+    echo "Connection failed: " . $conn->connect_error;
+    die("Connection failed" . $conn->connect_error);
+}
+
+// Get form data
+$company = $_POST['company'];
+$name = $_POST['name'];
+$batch_number = $_POST['batch_number'];
+$price_per_unit = $_POST['price_per_unit'];
+$quantity = $_POST['quantity'];
+$remaining_quantity = $_POST['remaining_quantity'];
+
+// Insert data into inventory table
+$sql = "INSERT INTO inventory (company, name, batch_number, price_per_unit, quantity, remaining_quantity) VALUES ('$company', '$name', '$batch_number', '$price_per_unit', '$quantity', '$remaining_quantity')";
+
+if (mysqli_query($conn, $sql)) {
+    // Redirect to success page or display a success message
+    echo "<script>alert('Inventory item added successfully!');</script>";
+    header("Location: index.php");
+    exit();
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+
+// Close database connection
+mysqli_close($conn);
+?>
+
+
+
+
+
+
+
+bills.css :
+.bill-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.bill-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bill-table th,
+.bill-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.bill-table th {
+  background-color: #f2f2f2;
+}
+
+.bill-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.bill-table tr:hover {
+  background-color: #ddd;
+}
+
+
+
+
+
+
+generate_bill.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Bill</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family :'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: grid;
+    gap: 7px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    font-size: large;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Generate Bill</h2>
+        <form action="process_bill.php" method="post">
+            <label for="customer_name">Customer Name:</label>
+            <input type="text" id="customer_name" name="customer_name" required><br>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required><br>
+
+            <label for="medicine">Medicine:</label>
+            <select id="medicine" name="medicine" required>
+                <?php
+                // Include database connection
+                $conn = new mysqli("localhost", "root", "", "pharmacy");
+                if ($conn->connect_error) {
+                    echo "Connection failed: " . $conn->connect_error;
+                    die("Connection failed" . $conn->connect_error);
+                }
+
+                // Fetch medicine names from database
+                $sql = "SELECT name FROM inventory";
+                $result = mysqli_query($conn, $sql);
+
+                // Output options for select dropdown
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+                }
+
+                // Close database connection
+                mysqli_close($conn);
+                ?>
+            </select><br>
+
+            <label for="quantity">Purchase Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required><br>
+
+            <button type="submit">Generate Bill</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+index.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Inventory Item</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Add Inventory Item</h2>
+            <form action="add_inventory.php" method="post">
+                <label for="company">Company:</label>
+                <input type="text" id="company" name="company" required>
+                
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="batch_number">Batch Number:</label>
+                <input type="text" id="batch_number" name="batch_number" required>
+
+                <label for="price_per_unit">Price per Unit:</label>
+                <input type="number" id="price_per_unit" name="price_per_unit" required>
+
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required>
+
+                <label for="remaining_quantity">Remaining Quantity:</label>
+                <input type="number" id="remaining_quantity" name="remaining_quantity" required>
+
+                <input type="submit" value="Add Inventory Item">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+process_bill.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bills.css">
+</head>
+<body>
+
+<?php
+// Include database connection
+$conn = new mysqli("localhost", "root", "", "pharmacy");
+
+if ($conn->connect_error) {
+    echo "Connection failed: " . $conn->connect_error;
+    die("Connection failed" . $conn->connect_error);
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $customer_name = $_POST["customer_name"];
+    $address = $_POST["address"];
+    $phone = $_POST["phone"];
+    $medicine = $_POST["medicine"];
+    $quantity = $_POST["quantity"];
+
+    // Debugging: Print the value of $medicine
+
+    // Retrieve price per unit from inventory table
+    $sql = "SELECT price_per_unit, remaining_quantity FROM inventory WHERE name = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $medicine);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $price_per_unit, $remaining_quantity);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Calculate total bill amount
+    $total_bill = $price_per_unit * $quantity;
+
+    // Save bill details in database
+    $sql = "INSERT INTO bills (customer_name, address, phone, medicine, purchase_quantity, total_bill) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ssssdi", $customer_name, $address, $phone, $medicine, $quantity, $total_bill);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Update remaining quantity of medicine in inventory table
+    $new_remaining_quantity = $remaining_quantity - $quantity;
+    $sql = "UPDATE inventory SET remaining_quantity = ? WHERE name = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "is", $new_remaining_quantity, $medicine);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Close database connection
+    mysqli_close($conn);
+
+    // Redirect to a success page or display a success message
+    echo "<script>alert('Bill generated successfully! Total amount: $total_bill');</script>";
+    // You can redirect to another page after the bill is generated
+    // header("Location: success_page.php");
+} else {
+    // If the form is not submitted, redirect to the form page
+    header("Location: generate_bill.php");
+}
+?>
+
+
+ <div class="bill-container">
+        <h2>Bill Details</h2>
+        <table class="bill-table">
+            <tr>
+                <th>Customer Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Medicine Name</th>
+                <th>Purchase Quantity</th>
+                <th>Total Bill</th>
+                <th>Bill Date</th>
+            </tr>
+            <tr>
+                <td><?php echo $customer_name; ?></td>
+                <td><?php echo $address; ?></td>
+                <td><?php echo $phone; ?></td>
+                <td><?php echo $medicine; ?></td>
+                <td><?php echo $quantity; ?></td>
+                <td><?php echo $total_bill; ?></td>
+                <td><?php echo date("h:i:sa") ?></td>
+            </tr>
+        </table>
+    </div>
+
+    
+</body>
+</html>
+
+
+
+
+
+
+styles.css :
+/* Styles for form */
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+.form-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 500px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  margin-bottom: 5px;
+  color: #666;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+
+
+view_inventory.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Inventory</title>
+    <style>
+        /* Styles for view inventory page */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Inventory Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Name</th>
+                    <th>Batch Number</th>
+                    <th>Price per Unit</th>
+                    <th>Quantity</th>
+                    <th>Remaining Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Include database connection
+                $conn = new mysqli("localhost", "root", "", "pharmacy");
+
+                if ($conn->connect_error) {
+                    echo "Connection failed: " . $conn->connect_error;
+                    die("Connection failed" . $conn->connect_error);
+                }
+
+                // Fetch data from inventory table
+                $sql = "SELECT * FROM inventory";
+                $result = $conn->query($sql);
+
+                // Check if there are any rows returned
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["company"] . "</td>";
+                        echo "<td>" . $row["name"] . "</td>";
+                        echo "<td>" . $row["batch_number"] . "</td>";
+                        echo "<td>" . $row["price_per_unit"] . "</td>";
+                        echo "<td>" . $row["quantity"] . "</td>";
+                        echo "<td>" . $row["remaining_quantity"] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='6'>No inventory items found.</td></tr>";
+                }
+
+                // Close database connection
+                mysqli_close($conn);
+                ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+view_transactions.php :
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Billing Transactions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>View Billing Transactions</h1>
+    <table>
+        <tr>
+            <th>Transaction ID</th>
+            <th>Customer Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Medicine Name</th>
+            <th>Purchase Quantity</th>
+            <th>Total Bill</th>
+            <th>Billing Date</th>
+        </tr>
+        <?php
+        // Include database connection
+        $conn = new mysqli("localhost", "root", "", "pharmacy");
+
+        // Retrieve all billing transactions from database
+        $sql = "SELECT * FROM bills";
+        $result = $conn->query($sql);
+
+        // Check if there are any transactions
+        if ($result->num_rows > 0) {
+            // Loop through each row and display data in table
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row['id'] . "</td>";
+                echo "<td>" . $row['customer_name'] . "</td>";
+                echo "<td>" . $row['address'] . "</td>";
+                echo "<td>" . $row['phone'] . "</td>";
+                echo "<td>" . $row['medicine_name'] . "</td>";
+                echo "<td>" . $row['purchase_quantity'] . "</td>";
+                echo "<td>" . $row['total_bill'] . "</td>";
+                echo "<td>" . $row['bill_date'] . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='7'>No billing transactions found.</td></tr>";
+        }
+
+        // Close database connection
+        mysqli_close($conn);
+        ?>
+    </table>
+</body>
+</html>

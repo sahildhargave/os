@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Timetable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Railway Timetable</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Train Number</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>From</th>
+            <th>To</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>12345</td>
+            <td>08:00</td>
+            <td>10:30</td>
+            <td>City A</td>
+            <td>City B</td>
+        </tr>
+        <tr>
+            <td>54321</td>
+            <td>11:00</td>
+            <td>13:45</td>
+            <td>City B</td>
+            <td>City C</td>
+        </tr>
+        <tr>
+            <td>98765</td>
+            <td>14:30</td>
+            <td>17:15</td>
+            <td>City C</td>
+            <td>City D</td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </tbody>
+</table>
+
+</body>
+</html>

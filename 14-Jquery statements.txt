@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Form Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+  <form>
+    <label for="num1">Enter number 1:</label>
+    <input type="text" id="num1"><br><br>
+    
+    <label for="num2">Enter number 2:</label>
+    <input type="text" id="num2"><br><br>
+    
+    <button type="button" id="calculate">Calculate</button>
+  </form>
+
+  <script>
+    $(document).ready(function(){
+      $('#calculate').click(function(){
+        var num1 = parseFloat($('#num1').val());
+        var num2 = parseFloat($('#num2').val());
+
+        var sum = num1 + num2;
+        var difference = num1 - num2;
+        var product = num1 * num2;
+        var quotient = num1 / num2;
+
+        alert("Sum: " + sum + "\nDifference: " + difference + "\nProduct: " + product + "\nQuotient: " + quotient);
+      });
+    });
+  </script>
+  
+</body>
+</html>

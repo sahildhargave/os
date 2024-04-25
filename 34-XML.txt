@@ -1,0 +1,68 @@
+Basic.xml :
+<class xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Basic.xsd">
+  <student>
+    <firstname>shri</firstname>
+    <lastname>Dhage</lastname>
+    <age>100</age>
+    <gender>Male</gender>
+    <mobilenumber>1234567890</mobilenumber>
+  </student>
+</class>
+
+
+Basix.xsd :
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+  <xs:element name="class">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="student">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="firstname">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="5"/> <!-- Set an appropriate maximum length -->
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="lastname">
+
+
+              <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="5"/> <!-- Set an appropriate maximum length -->
+                  </xs:restriction>
+                </xs:simpleType>
+               
+              </xs:element>
+              <xs:element name="age"  >
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="100"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="gender" type="xs:string"/>
+              <xs:element name="mobilenumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1000000000"/>
+                    <xs:maxInclusive value="9999999999"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+               
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+</xs:schema>

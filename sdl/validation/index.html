@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Login Page</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="index.js"></script>
+	</head>
+
+	<div class="container">
+		<h1>Login Page</h1>
+		<form action="/myaction.php" name="myForm" onsubmit="return validateForm()" method="post">
+			<div class="form-control" id="email">
+				<input type="email" placeholder="Email" name="femail" required><span class="formerror"></span>
+			</div>
+			<div class="form-control" id="password">
+				<input type="password" placeholder="password" name="fpass" required><span class="formerror"></span>
+			</div>
+
+			<button class="btn">Login In</button>
+			<p class="text">Don't have an account?<a href="index2.html">Register</a></p>
+			<p class="text1">Forget Password?<a href="index3.html">Click Here!</a></p>
+		</form>
+
+	</div>
+	<div class="footer">
+		<footer>
+			<small>Copy right &copy;<a href="https://github.com/sahilhargave>">sahil</a></small>
+			
+		</footer>
+	</div>
+</html>

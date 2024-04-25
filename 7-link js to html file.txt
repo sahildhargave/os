@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Example</title>
+</head>
+<body>
+    <h1>Hello, JavaScript!</h1>
+    <div id="output"></div>
+  <script>
+alert("Hello from JavaScript!");
+// Get user's name
+let name = prompt("What's your name?");
+// Calculate average number of weeks in human lifetime
+let age = prompt("What's your Age?");
+const weeksInYear = 52;
+const averageWeeksInLifetime = age * weeksInYear;
+// Greet the user based on the time of the day
+let now = new Date();
+let hour = now.getHours();
+let greeting;
+if (hour >= 5 && hour < 12) {
+    greeting = "Good morning";
+} else if (hour >= 12 && hour < 18) {
+    greeting = "Good afternoon";
+} else {
+    greeting = "Good evening";
+}
+// Display output in the UI
+document.getElementById("output").innerHTML = `
+    <p>Hello ${name},</p>
+    <p>Your total weeks in life: ${averageWeeksInLifetime}</p>
+    <p>Good ${greeting}!</p>
+`;
+  </script>
+</body>
+</html>

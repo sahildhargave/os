@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Handler Example</title>
+<style>
+    .button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<button id="myButton" class="button">Click me!</button>
+
+<script>
+    function handleClick(event) {
+        console.log('Button clicked!');
+        console.log('Mouse X coordinate:', event.clientX);
+        console.log('Mouse Y coordinate:', event.clientY);
+        // Add any other actions you want to perform when the button is clicked
+    }
+
+    function handleMouseOver() {
+        console.log('Mouse over the button!');
+        // Add any other actions you want to perform when the mouse is over the button
+    }
+
+    function handleMouseOut() {
+        console.log('Mouse out of the button!');
+        // Add any other actions you want to perform when the mouse leaves the button
+    }
+
+    function handleDoubleClick() {
+        console.log('Double clicked the button!');
+        // Add any other actions you want to perform when the button is double clicked
+    }
+
+    const button = document.getElementById('myButton');
+    button.addEventListener('click', handleClick);
+    button.addEventListener('mouseover', handleMouseOver);
+    button.addEventListener('mouseout', handleMouseOut);
+    button.addEventListener('dblclick', handleDoubleClick);
+</script>
+
+</body>
+</html>

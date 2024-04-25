@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    h2 {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .error {
+        color: red;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    #detailsSection {
+        margin-top: 20px;
+    }
+    #detailsSection h2 {
+        margin-bottom: 10px;
+    }
+    #detailsSection p {
+        margin-bottom: 5px;
+    }
+    #detailsSection strong {
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+<form id="registrationForm">
+    <label for="firstName">First Name:</label><br>
+    <input type="text" id="firstName" name="firstName"><br>
+    <span id="firstNameError" class="error"></span><br>
+
+    <label for="lastName">Last Name:</label><br>
+    <input type="text" id="lastName" name="lastName"><br>
+    <span id="lastNameError" class="error"></span><br>
+
+    <label for="organization">Organization:</label><br>
+    <input type="text" id="organization" name="organization"><br>
+    <span id="organizationError" class="error"></span><br>
+
+    <label for="hobbies">Hobbies:</label><br>
+    <textarea id="hobbies" name="hobbies"></textarea><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<div id="detailsSection" style="display: none;">
+    <h2>Details</h2>
+    <p><strong>First Name:</strong> <span id="displayFirstName"></span></p>
+    <p><strong>Last Name:</strong> <span id="displayLastName"></span></p>
+    <p><strong>Organization:</strong> <span id="displayOrganization"></span></p>
+    <p><strong>Hobbies:</strong> <span id="displayHobbies"></span></p>
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        var firstName = document.getElementById('firstName').value.trim();
+        var lastName = document.getElementById('lastName').value.trim();
+        var organization = document.getElementById('organization').value.trim();
+        var hobbies = document.getElementById('hobbies').value.trim();
+
+        var firstNameError = document.getElementById('firstNameError');
+        var lastNameError = document.getElementById('lastNameError');
+        var organizationError = document.getElementById('organizationError');
+
+        var isValid = true;
+
+        // Validation for first name
+        if(firstName === '') {
+            firstNameError.textContent = 'First name is required';
+            isValid = false;
+            setTimeout(function() {
+                firstNameError.textContent = '';
+            }, 2000); // Clear error message after 2 seconds
+        } else {
+            firstNameError.textContent = '';
+        }
+
+        // Validation for last name
+        if(lastName === '') {
+            lastNameError.textContent = 'Last name is required';
+            isValid = false;
+            setTimeout(function() {
+                lastNameError.textContent = '';
+            }, 2000); // Clear error message after 2 seconds
+        } else {
+            lastNameError.textContent = '';
+        }
+
+        // Validation for organization (accept only string)
+        if(!isNaN(organization)) {
+            organizationError.textContent = 'Organization must be a string';
+            isValid = false;
+            setTimeout(function() {
+                organizationError.textContent = '';
+            }, 2000); // Clear error message after 2 seconds
+        } else {
+            organizationError.textContent = '';
+        }
+
+        if(isValid) {
+            event.preventDefault(); // Prevent form submission if validation fails
+
+            // Display details
+            document.getElementById('displayFirstName').textContent = firstName;
+            document.getElementById('displayLastName').textContent = lastName;
+            document.getElementById('displayOrganization').textContent = organization;
+            document.getElementById('displayHobbies').textContent = hobbies;
+
+            // Show details section
+            document.getElementById('detailsSection').style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>

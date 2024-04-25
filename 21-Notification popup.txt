@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Popup</title>
+  <style>
+    .notification {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .close {
+      float: right;
+      cursor: pointer;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+
+    .close:hover {
+      color: #CCCCCC;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #008CBA;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f7f;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="showNotification()">Show Notification</button>
+
+  <div id="notification" class="notification">
+    <span class="close" onclick="hideNotification()">&times;</span>
+    <p>This is a notification message.</p>
+  </div>
+
+  <script>
+    function showNotification() {
+        var notification = document.getElementById("notification");
+        notification.style.display = "block";
+        // Display an alert message
+        alert("Notification displayed!");
+    }
+
+    function hideNotification() {
+        var notification = document.getElementById("notification");
+        notification.style.display = "none";
+    }
+  </script>
+</body>
+</html>
